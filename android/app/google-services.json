@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "97722519817",
+    "firebase_url": "https://basiclogin-7bdec.firebaseio.com",
+    "project_id": "basiclogin-7bdec",
+    "storage_bucket": "basiclogin-7bdec.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:97722519817:android:c2495214d46b180991c3d8",
+        "android_client_info": {
+          "package_name": "com.basiclogin.in"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "97722519817-g7igqrn33f9qcikqfhop6k7r75vpic01.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCc98OIfc1O5etlj_FSanj8aDBSVNubJ5k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "97722519817-g7igqrn33f9qcikqfhop6k7r75vpic01.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
+final databaseReference = Firestore.instance;
 void main() {
   runApp(MaterialApp(
     title: 'Flutter Tutorial',
@@ -11,6 +13,13 @@ class TutorialHome extends StatelessWidget {
   TextEditingController email = new TextEditingController();
   TextEditingController phno = new TextEditingController();
   TextEditingController pw = new TextEditingController();
+  void Register() async {
+    await databaseReference
+        .collection("users")
+        .document(email.text)
+        .setData({'email': email.text, 'phno': phno.text, 'pw': pw.text});
+  }
+
   @override
   Widget build(BuildContext context) {
     // Scaffold is a layout for the major Material Components.
@@ -49,9 +58,7 @@ class TutorialHome extends StatelessWidget {
                     disabledTextColor: Colors.black,
                     padding: EdgeInsets.fromLTRB(50, 0, 50, 0),
                     splashColor: Color.fromRGBO(84, 98, 111, 1),
-                    onPressed: () {
-                      print(email.text);
-                    },
+                    onPressed: Register,
                     child: Text(
                       "Create Account",
                       style: TextStyle(
@@ -97,9 +104,22 @@ class TutorialHome extends StatelessWidget {
 }
 
 class LoginPage extends StatelessWidget {
-  @override
   TextEditingController email = new TextEditingController();
   TextEditingController pw = new TextEditingController();
+  void Login() {
+    databaseReference.collection("users").getDocuments().then((querySnapshot) {
+      querySnapshot.documents.forEach((result) {
+        if (result.data["email"] == email.text &&
+            result.data["pw"] == pw.text) {
+          print("Login Success");
+        } else {
+          print("Unauthorized Access");
+        }
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     // Scaffold is a layout for the major Material Components.
     return Scaffold(
@@ -133,9 +153,7 @@ class LoginPage extends StatelessWidget {
                     disabledTextColor: Colors.black,
                     padding: EdgeInsets.fromLTRB(86, 0, 86, 0),
                     splashColor: Color.fromRGBO(84, 98, 111, 1),
-                    onPressed: () {
-                      print("hello");
-                    },
+                    onPressed: Login,
                     child: Text(
                       "Login",
                       style: TextStyle(
