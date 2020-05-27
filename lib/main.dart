@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 final databaseReference = Firestore.instance;
 void main() {
@@ -18,6 +19,12 @@ class TutorialHome extends StatelessWidget {
         .collection("users")
         .document(email.text)
         .setData({'email': email.text, 'phno': phno.text, 'pw': pw.text});
+    Fluttertoast.showToast(
+        msg: "Registration Success",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.white // also possible "TOP" and "CENTER"
+        );
   }
 
   @override
@@ -106,21 +113,30 @@ class TutorialHome extends StatelessWidget {
 class LoginPage extends StatelessWidget {
   TextEditingController email = new TextEditingController();
   TextEditingController pw = new TextEditingController();
-  void Login() {
+  void Login(BuildContext context) {
     databaseReference.collection("users").getDocuments().then((querySnapshot) {
       querySnapshot.documents.forEach((result) {
         if (result.data["email"] == email.text &&
             result.data["pw"] == pw.text) {
-          print("Login Success");
+          Fluttertoast.showToast(
+              msg: "Login Success",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              backgroundColor: Colors.white // also possible "TOP" and "CENTER"
+              );
         } else {
-          print("Unauthorized Access");
+          Fluttertoast.showToast(
+              msg: "Invalid Details",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM // also possible "TOP" and "CENTER"
+              );
         }
       });
     });
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext c) {
     // Scaffold is a layout for the major Material Components.
     return Scaffold(
         resizeToAvoidBottomPadding: false,
@@ -153,7 +169,9 @@ class LoginPage extends StatelessWidget {
                     disabledTextColor: Colors.black,
                     padding: EdgeInsets.fromLTRB(86, 0, 86, 0),
                     splashColor: Color.fromRGBO(84, 98, 111, 1),
-                    onPressed: Login,
+                    onPressed: () {
+                      Login(c);
+                    },
                     child: Text(
                       "Login",
                       style: TextStyle(
@@ -179,7 +197,7 @@ class LoginPage extends StatelessWidget {
                     splashColor: Color.fromRGBO(84, 98, 111, 1),
                     onPressed: () {
                       Navigator.push(
-                        context,
+                        c,
                         MaterialPageRoute(builder: (context) => TutorialHome()),
                       );
                     },
